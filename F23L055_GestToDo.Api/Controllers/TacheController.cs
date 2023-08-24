@@ -1,13 +1,16 @@
 ﻿using F23L055_GestToDo.Api.Dtos;
 using F23L055_GestToDo.Bll.Entities;
 using F23L055_GestToDo.Bll.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace F23L055_GestToDo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TacheController : ControllerBase
     {
         private readonly ITacheRepository _tacheRepository;
@@ -38,26 +41,41 @@ namespace F23L055_GestToDo.Api.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] CreeTacheDto dto)
         {
-            if (!_tacheRepository.CreerTache(new Tache(dto.Titre)))
+            Claim? userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
             {
-                return BadRequest();
+                if (!_tacheRepository.CreerTache(new Tache(dto.Titre, userId)))
+                {
+                    return BadRequest();
+                }
+
+                return NoContent();
             }
 
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpPatch]
         public IActionResult UpdateTacheFinalise([FromBody] UpdateTacheFinaliseDto dto)
         {
-            if (!_tacheRepository.UpdateTacheFinalise(new Tache(dto.Id, dto.Finalise)))
+            Claim? userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out int userId))
             {
-                return BadRequest();
+                if (!_tacheRepository.UpdateTacheFinalise(new Tache(dto.Id, dto.Finalise, userId)))
+                {
+                    return BadRequest();
+                }
+
+                return NoContent();
             }
 
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteTache(int id)
         {
             if (!_tacheRepository.DeleteTache(id))

@@ -2,6 +2,8 @@
 	@Id int
 AS
 BEGIN
-	SELECT Id, Titre, Finalise FROM Tache WHERE Id = @Id
+	SELECT Id, Titre, Finalise, Responsable	
+	FROM Tache
+	WHERE Id = @Id
 	RETURN 0
 END

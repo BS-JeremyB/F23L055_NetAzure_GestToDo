@@ -66,6 +66,10 @@
     <Build Include="Procedures\CSP_GetTacheUnique.sql" />
     <Build Include="Procedures\CSP_UpdateTacheFinalise.sql" />
     <Build Include="Procedures\CSP_DeleteTache.sql" />
+    <Build Include="Tables\User.sql" />
+    <Build Include="Procedures\CSP_CreerUser.sql" />
+    <Build Include="Procedures\CSP_GetUsers.sql" />
+    <Build Include="Procedures\CSP_Connexion.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="F23L055_GestToDo.Database.refactorlog" />

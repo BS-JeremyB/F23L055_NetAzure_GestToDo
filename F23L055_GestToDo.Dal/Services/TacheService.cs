@@ -32,7 +32,7 @@ namespace F23L055_GestToDo.Dal.Services
         public bool CreerTache(Tache tache)
         {
             _connection.Open();
-            int rows = _connection.ExecuteNonQuery("CSP_CreerTache", true, new { tache.Titre });
+            int rows = _connection.ExecuteNonQuery("CSP_CreerTache", true, new { tache.Titre, tache.Responsable });
             _connection.Close();
             return rows == 1;
         }

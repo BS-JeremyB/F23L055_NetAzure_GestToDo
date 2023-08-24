@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\F23L055_GestToDo.Dal\F23L055_GestToDo.Dal.csproj" />
   </ItemGroup>
 

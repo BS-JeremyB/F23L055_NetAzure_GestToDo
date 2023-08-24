@@ -1,0 +1,7 @@
+﻿CREATE PROCEDURE [dbo].[CSP_GetUsers]
+
+AS
+BEGIN
+	SELECT Id, Email, [Role] FROM [User]
+	RETURN 0
+END

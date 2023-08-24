@@ -1,4 +1,5 @@
 ﻿using F23L055_GestToDo.Dal.Entities;
+using F23L055_GestToDo.Dal.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,7 +18,18 @@ namespace F23L055_GestToDo.Dal.Mappers
             {
                 Id = (int)record["Id"],
                 Titre = (string)record["Titre"],
-                Finalise = (bool)record["Finalise"]
+                Finalise = (bool)record["Finalise"],
+                Responsable = (int)record["Responsable"]
+            };
+        }
+
+        internal static User ToUser(this IDataRecord record)
+        {
+            return new User()
+            {
+                Id = (int)record["Id"],
+                Email = (string)record["Email"],
+                Role = (Roles)Enum.ToObject(typeof(Roles), (int)record["Role"])
             };
         }
     }
